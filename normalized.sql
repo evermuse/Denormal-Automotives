@@ -92,4 +92,58 @@ from car_makes, car_models, car_years, car_denormal
 where car_makes.make_code = car_denormal.denormal_make_code AND car_models.model_code = car_denormal.denormal_model_code AND car_years.year = car_denormal.denormal_year;
 
 
---
+-- query to get a list of all make_title values in the car_models table
+
+select distinct make_title
+from car_makes
+inner join car_normal
+on car_makes.id = car_normal.model_id;
+
+
+-- query to list all model_title values where the make_code is 'VOLKS'
+
+select distinct car_models.model_title
+from car_normal
+inner join car_makes
+on car_normal.make_id = car_makes.id
+inner join car_models
+on car_normal.model_id = car_models.id
+where car_makes.make_code = 'VOLKS';
+
+
+-- Create a query to list all make_code, model_code, model_title, and year from car_models where the make_code is 'LAM'
+
+select distinct car_makes.make_code, car_models.model_code, car_models.model_title, car_years.year
+from car_normal
+inner join car_makes
+on car_normal.make_id = car_makes.id
+inner join car_models
+on car_normal.model_id = car_models.id
+inner join car_years
+on car_normal.year_id = car_years.id
+where car_makes.make_code = 'LAM';
+
+
+-- written again using aliases
+
+select distinct cm.make_code as make, cd.model_code as model, cd.model_title as title, cy.year
+from car_normal cn
+inner join car_makes cm
+on cn.make_id = cm.id
+inner join car_models cd
+on cn.model_id = cd.id
+inner join car_years cy
+on cn.year_id = cy.id
+where cm.make_code = 'LAM';
+
+
+-- list all fields from all car_models in years between 2010 and 2015
+
+select cm.model_code
+from car_normal cn
+inner join car_models cm
+on cn.model_id = cm.id
+inner join car_years cy
+on cn.year_id = cy.id
+-- where year > 2009 AND year < 2016;
+where year between 2010 AND 2015; -- can also use between
